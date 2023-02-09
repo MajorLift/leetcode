@@ -1,0 +1,15 @@
+# Decode Ways
+# https://leetcode.com/problems/decode-ways/
+# Accepted 2023-02-09 02:44 UTC · Python · 27 ms · 14.1 MB
+
+class Solution:
+    def numDecodings(self, s: str) -> int:
+        cnt = 0
+        @cache
+        def dp(idx):
+            nonlocal cnt
+            if idx >= len(s): return 1
+            if s[idx] == "0": return 0
+            cnt += dp(idx + 1) + (dp(idx + 2) if 10 <= int(s[idx:idx + 2]) <= 26 else 0)
+            return cnt
+        return dp(0)
